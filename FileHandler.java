@@ -1,54 +1,58 @@
-import java.awt.Component;
 import java.io.*;
 
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 public class FileHandler {
 	
 	private File thisFile;
-	private Component parent;
 	
 	
-	public FileHandler(Component c){
-		parent = c;
-	}
-	
-	public String getFileTitle(){
-		return thisFile.getName();
-	}
-	
-	private byte[] openFile(String filePath){
-		try(DataInputStream reader = new DataInputStream 
-					(new BufferedInputStream(new FileInputStream(new File(filePath))))){
+	public char read(){
 			
+		
+		try{
 			
-			byte[] newByteList = new byte[reader.available()];
+			FileReader charReader = new FileReader(thisFile);
 			
-			for(int i = 0; reader.available()>0; i++)
-				newByteList[i] = reader.readByte();
+			char fileContents = (char) charReader.read();
 			
+			charReader.close();
 			
-			return newByteList;
+			return fileContents;
 		
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-			
-		return null;
-	}
-
-	public String readAll(File newFile){
-		String fileContents;
-		thisFile = newFile;
 		
+		return ' ';	
+	}
+	
+	
+	public <T> void write(T value){
+		try{
+			PrintWriter writer = new PrintWriter(new FileWriter(thisFile));
+			
+			writer.print(value);
+			
+			writer.close();
+			
+		
+		}catch(FileNotFoundException e){
+			e.printStackTrace();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+
+	public String readAll(){
 		try{
 			BufferedReader reader = new BufferedReader(new FileReader(thisFile));
 			
-			fileContents = reader.readLine();
+			String fileContents = reader.readLine();
 			
 			reader.close();
 			
@@ -59,13 +63,20 @@ public class FileHandler {
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-			
 		
 		return null;	
-		
+	
 	}
 	
-	public void writeAll(String fileContents){
+	
+	public String readAll(String fileName){	
+					
+			thisFile = new File(fileName);
+			
+			return readAll();
+	}
+	
+	public <T> void writeAll(T fileContents){
 		
 		try{
 			PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(thisFile)));
@@ -84,13 +95,13 @@ public class FileHandler {
 		
 	}
 	
-    public void saveFileAs(String fileContents){
+	public <T> void writeAll(T fileContents, String fileName){
 		
-    	fileChooser.showSaveDialog(parent);
-    	thisFile = fileChooser.getSelectedFile();
-    	
-    	saveFile(fileContents);
-    	
+		thisFile = new File(fileName);
+		
+		writeAll(fileContents);
+		
 	}
+	
 	
 }
