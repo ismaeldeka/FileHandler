@@ -16,6 +16,9 @@ public class FileHandler {
 	
 	private File thisFile;
 	
+	public void getFile(){
+		return thisFile;
+	}
 	
 	public char read(){
 			
@@ -83,6 +86,13 @@ public class FileHandler {
 	public String readAll(String fileName){	
 					
 			thisFile = new File(fileName);
+			
+			return readAll();
+	}
+	
+		public String readAll(File fileName){	
+					
+			thisFile = fileName;
 			
 			return readAll();
 	}
