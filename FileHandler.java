@@ -43,7 +43,7 @@ public class FileHandler {
 	}
 	
 	
-	public <T> void write(T value){
+	public void write(char value){
 		try{
 			PrintWriter writer = new PrintWriter(new FileWriter(thisFile));
 			
@@ -90,14 +90,14 @@ public class FileHandler {
 			return readAll();
 	}
 	
-		public String readAll(File fileName){	
+	public String readAll(File fileName){	
 					
 			thisFile = fileName;
 			
 			return readAll();
 	}
 	
-	public <T> void writeAll(T fileContents){
+	public void writeAll(String fileContents){
 		
 		try{
 			PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(thisFile)));
@@ -116,7 +116,7 @@ public class FileHandler {
 		
 	}
 	
-	public <T> void writeAll(T fileContents, String fileName){
+	public void writeAll(String fileContents, String fileName){
 		
 		thisFile = new File(fileName);
 		
